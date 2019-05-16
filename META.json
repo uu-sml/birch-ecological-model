@@ -1,0 +1,15 @@
+{
+  "name": "EcologicalModel",
+  "version": "0.0.0",
+  "description": "",
+  "manifest": {
+    "source": [
+	    "bi/model/EcologicalModel.bi"
+    ],
+    "other": [
+      "LICENSE",
+      "META.json",
+      "README.md"
+    ]
+  }
+}
