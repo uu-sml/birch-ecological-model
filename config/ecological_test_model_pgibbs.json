@@ -1,6 +1,6 @@
 {
   "model": {
-    "class": "EcologicalModel"
+    "class": "EcologicalTestModel"
   },
   "sampler": {
     "class": "ParticleGibbs",
@@ -9,5 +9,5 @@
   },
   "seed": 1234,
   "input": "input/observation_data.json",
-  "output": "output/ecological_pgibbs.json"
+  "output": "output/ecological_test_pgibbs.json"
 }

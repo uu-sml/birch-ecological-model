@@ -35,14 +35,14 @@ class EcologicalModel < StateSpaceModel<EcoParameter, EcoState, Random<Real>> {
   fiber parameter(θ:EcoParameter) -> Event {
 
     θ.c ~ Gaussian(μ, σ2);
-    θ.Q ~ InverseGamma(α_Q, β_Q);
-
-    θ.b ~ Gaussian(vector(μ, 2), identity(2)*θ.Q);
-    θ.R ~ InverseGamma(α_R, β_R);
   }
 
   fiber initial(x:EcoState, θ:EcoParameter) -> Event {
     x.L ~ Gaussian(40.0, 10.0);
+    θ.Q ~ InverseGamma(α_Q, β_Q);
+
+    θ.b ~ Gaussian(vector(μ, 2), identity(2)*θ.Q);
+    θ.R ~ InverseGamma(α_R, β_R);
   }
 
   fiber transition(x':EcoState, x:EcoState, θ:EcoParameter) -> Event {
@@ -54,5 +54,20 @@ class EcologicalModel < StateSpaceModel<EcoParameter, EcoState, Random<Real>> {
   fiber observation(y:Random<Real>, x:EcoState, θ:EcoParameter) -> Event {
     y ~ Gaussian(x.L.value(), θ.R); // force realization to prevent pruning
                                     // of the delayed graph
+  }
+}
+
+class EcologicalTestModel < EcologicalModel {
+
+  fiber parameter(θ:EcoParameter) -> Event {
+    θ.c ~ Gaussian(μ, σ2);
+    θ.Q ~ InverseGamma(α_Q, β_Q);
+
+    θ.b ~ Gaussian(vector(μ, 2), identity(2)*θ.Q);
+    θ.R ~ InverseGamma(α_R, β_R);
+  }
+
+  fiber initial(x:EcoState, θ:EcoParameter) -> Event {
+    x.L ~ Gaussian(40.0, 10.0);
   }
 }
