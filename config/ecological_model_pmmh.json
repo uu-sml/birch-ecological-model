@@ -4,7 +4,7 @@
   },
   "sampler": {
     "class": "ParticleMarginalMetropolisHastings",
-    "nsamples": 5000,
+    "nsamples": 2000,
     "nparticles": 50
   },
   "seed": 1234,
