@@ -20,7 +20,7 @@ class EcoParameter {
   }
 }
 
-class EcologicalModel < StateSpaceModel<EcoParameter, EcoState, Random<Real>> {
+class EcologicalModel < HMMWithProposal<EcoParameter, EcoState, Random<Real>> {
 
   μ:Real <- 0.01;
 
@@ -55,19 +55,25 @@ class EcologicalModel < StateSpaceModel<EcoParameter, EcoState, Random<Real>> {
     y ~ Gaussian(x.L.value(), θ.R); // force realization to prevent pruning
                                     // of the delayed graph
   }
-}
 
-class EcologicalTestModel < EcologicalModel {
+  function propose(x':HMMWithProposal<EcoParameter,EcoState,Random<Real>>) -> (Real, Real) {
+    assert x'.θ.c.hasValue();
+    auto θ' <- x'.θ; // Parameter from previous model
+    
+    auto σ2 <- 0.02;
+    auto Q <- Normal(θ'.c, σ2); // q(θ | θ')
 
-  fiber parameter(θ:EcoParameter) -> Event {
-    θ.c ~ Gaussian(μ, σ2);
-    θ.Q ~ InverseGamma(α_Q, β_Q);
+    θ.c <- Q.simulate(); // Draw new parameter for this model
+    auto q <- Q.observe(θ.c);  // log q(θ | θ') (new given old)
 
-    θ.b ~ Gaussian(vector(μ, 2), identity(2)*θ.Q);
-    θ.R ~ InverseGamma(α_R, β_R);
-  }
+    auto Q' <- Normal(θ.c, σ2); // q(θ' | θ) 
+    auto q' <- Q'.observe(θ'.c); // log q(θ' | θ) (old given new)
 
-  fiber initial(x:EcoState, θ:EcoParameter) -> Event {
-    x.L ~ Gaussian(40.0, 10.0);
+    stderr.print("θ " + x'.θ.c + "\n");
+    stderr.print("θ'" + θ.c + "\n");
+
+    assert false;
+
+    return (q, q');
   }
 }

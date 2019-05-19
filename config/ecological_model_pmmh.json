@@ -1,0 +1,13 @@
+{
+  "model": {
+    "class": "EcologicalModel"
+  },
+  "sampler": {
+    "class": "ParticleMarginalMetropolisHastings",
+    "nsamples": 5000,
+    "nparticles": 50
+  },
+  "seed": 1234,
+  "input": "input/observation_data.json",
+  "output": "output/ecological_pmmh.json"
+}
