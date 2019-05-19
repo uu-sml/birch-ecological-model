@@ -56,7 +56,10 @@ class EcologicalModel < HMMWithProposal<EcoParameter, EcoState, Random<Real>> {
                                     // of the delayed graph
   }
 
-  function propose(x':HMMWithProposal<EcoParameter,EcoState,Random<Real>>) -> (Real, Real) {
+  function propose(x:ForwardModel) -> (Real, Real) {
+
+    auto x' <- (HMMWithProposal<EcoParameter,EcoState,Random<Real>>?(x))!;
+
     assert x'.θ.c.hasValue();
     auto θ' <- x'.θ; // Parameter from previous model
     
@@ -68,11 +71,6 @@ class EcologicalModel < HMMWithProposal<EcoParameter, EcoState, Random<Real>> {
 
     auto Q' <- Normal(θ.c, σ2); // q(θ' | θ) 
     auto q' <- Q'.observe(θ'.c); // log q(θ' | θ) (old given new)
-
-    stderr.print("θ " + x'.θ.c + "\n");
-    stderr.print("θ'" + θ.c + "\n");
-
-    assert false;
 
     return (q, q');
   }

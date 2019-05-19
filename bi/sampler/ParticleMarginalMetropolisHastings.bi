@@ -60,7 +60,9 @@ class ParticleMarginalMetropolisHastings < ParticleFilter {
     } else {
       m <- clone<ForwardModel>(x[b]);
     }
-    stdout.print("acceptance rate: " + A/(A+R) + "\n");
+    if verbose {
+      stderr.print("acceptance rate: " + A/(A+R) + "\n");
+    }
   }
 
 }
