@@ -33,10 +33,7 @@ class EcologicalModel < HMMWithProposal<EcoParameter, EcoState, Random<Real>> {
   β_R:Real <- 10.01;
 
   fiber parameter(θ:EcoParameter) -> Event {
-
-    if !θ.c.hasValue() {
-      θ.c <~ Normal(μ, σ2);
-    }
+    θ.c ~ Normal(μ, σ2);
   }
 
   fiber initial(x:EcoState, θ:EcoParameter) -> Event {
@@ -62,10 +59,9 @@ class EcologicalModel < HMMWithProposal<EcoParameter, EcoState, Random<Real>> {
 
     auto x_old <- (HMMWithProposal<EcoParameter,EcoState,Random<Real>>?(x))!;
 
-    // assert x_old.θ.c.hasValue();
     auto θ_old <- x_old.θ; // Parameter from previous model
     
-    auto σ2 <- 2.5;
+    auto σ2 <- 5.5;
     auto Q_old <- Normal(θ_old.c, σ2); // q(θ' | θ)
 
     θ.c <- Q_old.simulate(); // Draw new parameter for this model
