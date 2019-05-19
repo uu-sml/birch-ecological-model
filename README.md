@@ -30,6 +30,4 @@ in an island population of song sparrows", Proc. Biol. Sci., Vol. 267, No. 1443
 
 ## Particle Marginal Metropolis Hastings
 The code in `sampler/ParticleMarginalMetropolisHastings.bi` is experimental and is currently not working.
-To compile it, add `model/ForwardModel.bi` to the standard library and recompile it. There is a problem with the sampler, however, and the proposal function is not called correctly (see [this issue][1]).
-
-[1]:https://github.com/uu-sml/birch-ecological-model/issues/1
+To compile it, add `model/ForwardModel.bi` to the standard library and recompile it. The code is still experimental and may not work as intended.
