@@ -34,7 +34,9 @@ class EcologicalModel < HMMWithProposal<EcoParameter, EcoState, Random<Real>> {
 
   fiber parameter(θ:EcoParameter) -> Event {
 
-    θ.c ~ Gaussian(μ, σ2);
+    if !θ.c.hasValue() {
+      θ.c <~ Normal(μ, σ2);
+    }
   }
 
   fiber initial(x:EcoState, θ:EcoParameter) -> Event {
@@ -58,20 +60,20 @@ class EcologicalModel < HMMWithProposal<EcoParameter, EcoState, Random<Real>> {
 
   function propose(x:ForwardModel) -> (Real, Real) {
 
-    auto x' <- (HMMWithProposal<EcoParameter,EcoState,Random<Real>>?(x))!;
+    auto x_old <- (HMMWithProposal<EcoParameter,EcoState,Random<Real>>?(x))!;
 
-    assert x'.θ.c.hasValue();
-    auto θ' <- x'.θ; // Parameter from previous model
+    // assert x_old.θ.c.hasValue();
+    auto θ_old <- x_old.θ; // Parameter from previous model
     
-    auto σ2 <- 0.02;
-    auto Q <- Normal(θ'.c, σ2); // q(θ | θ')
+    auto σ2 <- 2.5;
+    auto Q_old <- Normal(θ_old.c, σ2); // q(θ' | θ)
 
-    θ.c <- Q.simulate(); // Draw new parameter for this model
-    auto q <- Q.observe(θ.c);  // log q(θ | θ') (new given old)
+    θ.c <- Q_old.simulate(); // Draw new parameter for this model
+    auto q <- Q_old.observe(θ.c);  // log q(θ | θ') (new given old)
 
-    auto Q' <- Normal(θ.c, σ2); // q(θ' | θ) 
-    auto q' <- Q'.observe(θ'.c); // log q(θ' | θ) (old given new)
+    auto Q_new <- Normal(θ.c, σ2); // q(θ' | θ) 
+    auto q_old <- Q_new.observe(θ_old.c); // log q(θ | θ') (old given new)
 
-    return (q, q');
+    return (q, q_old);
   }
 }
