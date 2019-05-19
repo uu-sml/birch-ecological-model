@@ -27,3 +27,9 @@ The file `input/observation_data.json` contains data from observations of song
 birds between 1976 and 1998 (extracted from Saether et al., "Estimating the time to Extinction
 in an island population of song sparrows", Proc. Biol. Sci., Vol. 267, No. 1443
 (2000), pp. 621-626).
+
+## Particle Marginal Metropolis Hastings
+The code in `sampler/ParticleMarginalMetropolisHastings.bi` is experimental and is currently not working.
+To compile it, add `model/ForwardModel.bi` to the standard library and recompile it. There is a problem with the sampler, however, and the proposal function is not called correctly (see [this issue][1]).
+
+[1]:https://github.com/uu-sml/birch-ecological-model/issues/1
