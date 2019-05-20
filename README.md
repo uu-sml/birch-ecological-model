@@ -24,9 +24,9 @@ birch install
 ```
 
 The file `input/observation_data.json` contains data from observations of song
-birds between 1976 and 1998 (extracted from Saether et al., "Estimating the time to Extinction
+birds between 1976 and 1998 (extracted from [Saether et al., "Estimating the time to Extinction
 in an island population of song sparrows", Proc. Biol. Sci., Vol. 267, No. 1443
-(2000), pp. 621-626).
+(2000), pp. 621-626][2]).
 
 ## Particle Marginal Metropolis Hastings
 The model has a `proposal` function that can be use together with the
@@ -35,3 +35,4 @@ of the [Birch standard library][1].
 
 
 [1]:https://github.com/lawmurray/Birch.Standard/tree/metropolis-hastings
+[2]:https://www.jstor.org/stable/2665985
