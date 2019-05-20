@@ -29,5 +29,9 @@ in an island population of song sparrows", Proc. Biol. Sci., Vol. 267, No. 1443
 (2000), pp. 621-626).
 
 ## Particle Marginal Metropolis Hastings
-The code in `sampler/ParticleMarginalMetropolisHastings.bi` is experimental and is currently not working.
-To compile it, add `model/ForwardModel.bi` to the standard library and recompile it. The code is still experimental and may not work as intended.
+The model has a `proposal` function that can be use together with the
+`ParticleMarginalMetropolisHasting` sampler in the `metropolis-hastings` branch
+of the [Birch standard library][1].
+
+
+[1]:https://github.com/lawmurray/Birch.Standard/tree/metropolis-hastings

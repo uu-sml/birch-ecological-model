@@ -4,9 +4,7 @@
   "description": "",
   "manifest": {
     "source": [
-      "bi/model/EcologicalModel.bi",
-      "bi/model/HMMWithProposal.bi",
-      "bi/sampler/ParticleMarginalMetropolisHastings.bi"
+      "bi/model/EcologicalModel.bi"
     ],
     "other": [
       "LICENSE",
