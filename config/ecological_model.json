@@ -3,11 +3,12 @@
     "class": "EcologicalModel"
   },
   "sampler": {
-    "class": "ParticleFilter",
-    "nsamples": 100,
-    "nparticles": 50
+    "class": "ParticleMarginalMetropolisHastings",
+    "nsamples": 2500,
+    "nparticles": 512
   },
   "seed": 1234,
   "input": "input/observation_data.json",
-  "output": "output/ecological_pf.json"
+  "output": "output/ecological_observations_pmmh.json",
+  "trigger": 1.0
 }

@@ -1,43 +1,22 @@
-class EcoState {
-  L:Random<Real>;
+class EcologicalModelObservation < HMMWithProposal<EcoParameter, EcoState, Random<Real>> {
 
-  function write(buffer:Buffer) {
-    buffer.set("L", L);
-  }
-}
+  μ:Real <- 0.0;
+  μb:Real[_] <- [0.1, -0.1]
 
-class EcoParameter {
-  b:Random<Real[_]>;
-  c:Random<Real>;
-  Q:Random<Real>;
-  R:Random<Real>;
+  σ2:Real <- 1.0;
 
-  function write(buffer:Buffer) {
-    buffer.set("b", b);
-    buffer.set("c", c);
-    buffer.set("Q", Q);
-    buffer.set("R", R);
-  }
-}
+  α_Q:Real <- 0.5;
+  β_Q:Real <- 0.5;
 
-class EcologicalModel < HMMWithProposal<EcoParameter, EcoState, Random<Real>> {
-
-  μ:Real <- 1.0;
-
-  σ2:Real <- 10.0;
-
-  α_Q:Real <- 2.5;
-  β_Q:Real <- 2.5;
-
-  α_R:Real <- 2.5;
-  β_R:Real <- 2.5;
+  α_R:Real <- 0.5;
+  β_R:Real <- 0.5;
 
   fiber parameter(θ:EcoParameter) -> Event {
     θ.c ~ Normal(μ, σ2);
   }
 
   fiber initial(x:EcoState, θ:EcoParameter) -> Event {
-    x.L ~ Gaussian(10.0, 1.0);
+    x.L <- 5.0; // Gaussian(5.0, 0.1);
     θ.Q ~ InverseGamma(α_Q, β_Q);
 
     θ.b ~ Gaussian(vector(μ, 2), identity(2)*θ.Q);

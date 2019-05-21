@@ -5,9 +5,9 @@
   "sampler": {
     "class": "ParticleMarginalMetropolisHastings",
     "nsamples": 5000,
-    "nparticles": 50
+    "nparticles": 256
   },
   "seed": 1234,
-  "input": "input/observation_data.json",
-  "output": "output/ecological_pmmh.json"
+  "input": "input/simulation_data.json",
+  "output": "output/ecological_simulation_pmmh.json"
 }
