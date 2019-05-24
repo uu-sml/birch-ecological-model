@@ -24,7 +24,7 @@ class EcologicalModel < HMMWithProposal<EcoParameter, EcoState, Random<Real>> {
 
   μ:Real <- 1.0;
 
-  σ2:Real <- 10.0;
+  σ2:Real <- 2.0;
 
   α_Q:Real <- 2.5;
   β_Q:Real <- 2.5;
@@ -37,7 +37,7 @@ class EcologicalModel < HMMWithProposal<EcoParameter, EcoState, Random<Real>> {
   }
 
   fiber initial(x:EcoState, θ:EcoParameter) -> Event {
-    x.L ~ Gaussian(10.0, 1.0);
+    x.L ~ Gaussian(3.5, 0.1);
     θ.Q ~ InverseGamma(α_Q, β_Q);
 
     θ.b ~ Gaussian(vector(μ, 2), identity(2)*θ.Q);
@@ -51,8 +51,8 @@ class EcologicalModel < HMMWithProposal<EcoParameter, EcoState, Random<Real>> {
   }
 
   fiber observation(y:Random<Real>, x:EcoState, θ:EcoParameter) -> Event {
-    y ~ Gaussian(x.L.value(), θ.R); // force realization to prevent pruning
-                                    // of the delayed graph
+    auto mu <- exp(x.L.value()); // force realization to prevent pruning of the delayed graph
+    y ~ Gaussian(mu, θ.R); 
   }
 
   function propose(x:ForwardModel) -> (Real, Real) {
@@ -61,7 +61,7 @@ class EcologicalModel < HMMWithProposal<EcoParameter, EcoState, Random<Real>> {
 
     auto θ_old <- x_old.θ; // Parameter from previous model
     
-    auto σ2 <- 2.0;
+    auto σ2 <- 0.05;
     auto Q_old <- Normal(θ_old.c, σ2); // q(θ' | θ)
 
     θ.c <- Q_old.simulate(); // Draw new parameter for this model
