@@ -31,8 +31,10 @@ in an island population of song sparrows", Proc. Biol. Sci., Vol. 267, No. 1443
 ## Particle Marginal Metropolis Hastings
 The model has a `proposal` function that can be use together with the
 `ParticleMarginalMetropolisHasting` sampler in the `metropolis-hastings` branch
-of the [Birch standard library][1].
+of the [Birch standard library][1]. Note that you need to use [commit 55a047c][3] of the
+Birch language to run the simulation.
 
 
 [1]:https://github.com/lawmurray/Birch.Standard/tree/metropolis-hastings
 [2]:https://www.jstor.org/stable/2665985
+[3]:https://github.com/lawmurray/Birch/commit/55a047c6670c750c50b6bd55d832e7c04d4867b5
